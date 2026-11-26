@@ -1,43 +1,50 @@
+# 3. R Services — Analysis & Prediction
 
-## M6 [Haneen] — R Integration, Analysis & Prediction Services
- 
+**Member:** M6 [Haneen]
+
+**Primary ownership:** Input validation, analysis orchestration, and prediction services.
+
 ### Responsibilities
- 
-- Connect Flask to R through Rscript with safe timeouts and temporary files.
-- Prepare and validate data before analysis (required columns, types, missing values, plausible ranges) using the validators and helpers written by M1.
-- Run analysis jobs and parse the JSON returned by R.
-- Prediction service: call `prediction.R` with the chosen model and compute the load level from the thresholds in `config.py`. These thresholds are fixed bands, not statistics, so they are not calculated in R.
-- Turn R errors into clear API errors.
+
+- Validate required columns, types, missing values, and plausible ranges using shared core validators.
+- Call the R statistics functions directly and return their documented result structures.
+- Provide prediction intervals and load-level bands using configuration from R core.
+- Report invalid inputs and analysis failures explicitly to callers.
+- Coordinate analysis and prediction result persistence with M5.
+
 ### Assigned files
- 
+
 ```text
-backend/
-├── services/
-│   ├── analysis_service.py
-│   └── prediction_service.py
-└── r_engine/
-    └── r_runner.py
+SECSTAT/
+└── R/
+    ├── services/
+    │   ├── analysis_service.R
+    │   └── prediction_service.R
+    └── core/
+        └── validators.R
 ```
- 
+
 ### Depends on
- 
-- **M3 [Basouny], M4 [Joman], M1 [Rayan]:** R scripts and their JSON output (M1 wrote the descriptive, correlation, ANOVA and Tukey scripts).
-- **M5 [Haneen Ali]:** datasets to analyze.
-- **M1 [Rayan]:** API contract, routes, `validators.py` and `helpers.py`.
+
+- **M1 [Rayan]:** function contract, shared helpers, and configuration conventions.
+- **M3 [Basouny] and M4 [Jomana]:** statistics function inputs and return structures.
+- **M5 [Haneen Ali]:** datasets and metadata to analyze.
+- **M10 [Omar Tarek]:** validation and service test findings.
+
 ### Provides to
- 
-- **M1 [Rayan]:** analysis and prediction services for the routes.
-- **M5 [Haneen Ali]:** results to store.
-- **M2 [Remas], M7 [Abdelrahman], M8 [Nabila]:** the numbers behind every statistical page and the predictor.
+
+- **M1 [Rayan]:** analysis and prediction service interfaces for app integration.
+- **M2 [Remas], M7 [Abdelrahman], and M8 [Nabila]:** analysis and prediction result tables for their modules.
+- **M5 [Haneen Ali]:** analysis and prediction results to persist.
+- **M10 [Omar Tarek]:** service behavior and validation cases for tests.
+
 ### Timeline
- 
+
 | Phase | Task |
 |---|---|
-| 1. Research design & contracts | Agree R input/output format with M3, M4 and M1 |
-| 2. Foundations | `r_runner.py` with timeouts; plug in M1's validators |
-| 3. Core build | `analysis_service.py` for every R script |
-| 4. Integration | `prediction_service.py` and load level bands; error handling |
-| 5. Testing & validation | Test edge cases (bad data, R failures, timeouts) with M10 |
-| 6. Final report & presentation | Document the R integration for the technical documentation |
- 
----
+| 1. Research design & contracts | Agree service inputs and outputs with M1, M3, and M4 |
+| 2. Foundations | Implement shared validation and dataset checks |
+| 3. Core build | Orchestrate the requested statistics functions |
+| 4. Integration | Connect prediction, intervals, and configured load bands |
+| 5. Testing & validation | Resolve invalid-input and analysis-failure findings |
+| 6. Final report & presentation | Document service behavior for the technical handoff |

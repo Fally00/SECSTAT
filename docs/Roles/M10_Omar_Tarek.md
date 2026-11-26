@@ -1,41 +1,53 @@
+# 5. Quality Assurance & Reproducibility
 
-## M10 [Omar Tarek] — Quality Assurance & Reproducibility
- 
+**Member:** M10 [Omar Tarek]
+
+**Primary ownership:** testthat tests, recursive test setup, and test documentation shared with M1.
+
 ### Responsibilities
- 
-- Test the API and input validation.
-- Test the simulator: ranges, seeded reproducibility.
-- Test R outputs against reference calculations and the simulation ground truth.
-- Test the prediction service with known inputs and expected outputs.
-- Test the complete flow: simulate → analyze → predict → report.
-- Document bugs, verify fixes, and confirm the project runs on another machine.
-- Contribute to `docs/TESTING.md` and `docs/REPRODUCIBILITY.md` through M1.
+
+- Test simulator ranges, seeded reproducibility, and preserved metadata.
+- Compare statistics and prediction results with reference calculations and simulation ground truth.
+- Test the end-to-end flow from simulation through analysis, prediction, and reporting.
+- Report defects, verify fixes, and check setup on another machine.
+- Keep test and reproducibility documentation aligned with the implemented workflow.
+
 ### Assigned files
- 
+
 ```text
-└── tests/
-    ├── test_reproducibility.py
-    ├── test_analysis.py
-    └── test_prediction.py
+SECSTAT/
+├── tests/
+│   └── testthat/
+│       ├── helper-load.R
+│       ├── test-reproducibility.R
+│       ├── test-analysis.R
+│       └── test-prediction.R
+└── docs/
+    ├── TESTING.md                       (shared with M1 [Rayan])
+    └── REPRODUCIBILITY.md               (shared with M1 [Rayan])
 ```
- 
+
 ### Depends on
- 
-- **Everyone:** merged code to test.
-- **M4 [Jomana]:** reference values and validation results.
-- **M9 [Tamim]:** seeds and expected dataset properties.
- 
+
+- **M1 [Rayan]:** test and reproducibility requirements.
+- **M2 [Remas]:** hypotheses and expected research behavior.
+- **M3 [Basouny] and M4 [Jomana]:** model references and validation values.
+- **M5 [Haneen Ali] and M6 [Haneen]:** service and persistence behavior.
+- **M7 [Abdelrahman] and M8 [Nabila]:** integrated module flows.
+- **M9 [Tamim]:** seeds and expected simulator properties.
+
 ### Provides to
- 
-- **Everyone:** bug reports and verification of fixes.
-- **M1 [Rayan]:** test results and sign-off before final delivery.
+
+- **Everyone:** reproducible test findings, defect reports, and verification of fixes.
+- **M1 [Rayan]:** test results and readiness findings for project documentation.
+
 ### Timeline
- 
+
 | Phase | Task |
 |---|---|
-| 1. Research design & contracts | Review the API contract; plan test cases |
-| 2. Foundations | Test setup; first tests for the simulator and datasets |
-| 3. Core build | API, analysis and prediction tests as each part lands |
-| 4. Integration | End-to-end test of the full chain |
-| 5. Testing & validation | Reproducibility on a second machine; final bug sweep |
-| 6. Final report & presentation | Test summary for the report and presentation |
+| 1. Research design & contracts | Plan tests from the function contract and hypotheses |
+| 2. Foundations | Establish recursive loading and simulator reproducibility tests |
+| 3. Core build | Add focused analysis, prediction, and service tests |
+| 4. Integration | Exercise the full app workflow |
+| 5. Testing & validation | Verify reproducibility and resolve final defects |
+| 6. Final report & presentation | Provide the test summary |
