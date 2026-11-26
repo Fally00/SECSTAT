@@ -1,53 +1,58 @@
- 
-# 4. Frontend Engineering — Web Interface
- 
-**Members:** M7 [Abdelrahman] + M8 [Nabila]
- 
-**Primary ownership:** Data pages, dashboard, statistical interfaces and shared charts. M8's chart helpers are used by M7 and M2, and M7's dataset selection is used by M8.
- 
+# 4. Shiny Interface — Statistics & Visualization
 
-## M8 [Nabila] — Statistical Interfaces & Visualization
- 
+**Member:** M8 [Nabila]
+
+**Primary ownership:** Statistical modules, shared chart helpers, and report figures; shared theme and predictor/regression/traffic modules.
+
 ### Responsibilities
- 
-- Build the Regression Lab, Traffic Level Comparison, Diagnostics Lab, Model Comparison and Reports pages.
-- Build `charts.js`, the shared Plotly helpers (scatter with fitted curves, residual plots, Q-Q plot, comparison charts), and share it early with M2 and M7.
-- Display coefficient tables, p-values and model metrics clearly.
-- Loading, validation and error states.
+
+- Build diagnostics, model comparison, and report modules.
+- Co-develop predictor with M2 and regression/traffic modules with M7.
+- Implement shared plotly chart helpers for fitted curves, residuals, Q-Q plots, and comparisons.
+- Display coefficients, p-values, intervals, and model metrics clearly.
+- Keep loading, validation, and error states explicit and consistent with the shared theme.
+
 ### Assigned files
-#### file naming is purely optional and you can arrange and adjust it however you like 
 
 ```text
-frontend/
-├── pages/
-│   ├── regression.html
-│   ├── traffic_levels.html
-│   ├── diagnostics.html
-│   ├── model_comparison.html
-│   └── reports.html
-└── js/
-    ├── analysis.js
-    └── charts.js
+SECSTAT/
+├── R/
+│   ├── core/
+│   │   └── theme.R                       (shared with M1 [Rayan])
+│   └── interface/
+│       ├── mod_predictor.R               (shared with M2 [Remas])
+│       ├── mod_regression.R              (shared with M7 [Abdelrahman])
+│       ├── mod_traffic_levels.R          (shared with M7 [Abdelrahman])
+│       ├── mod_diagnostics.R
+│       ├── mod_model_comparison.R
+│       ├── mod_reports.R
+│       └── charts.R
+└── reports/
+    └── figures/
 ```
- 
+
 ### Depends on
- 
-- **M1 [Rayan]:** design system, `api.js`, routes.
-- **M3 [Basouny], M4 [Jomana], M6 [Haneen], M1 [Rayan]:** the result structure and the numbers (M1 wrote the descriptive, correlation, ANOVA and Tukey scripts).
-- **M7 [Abdelrahman]:** the selected dataset.
+
+- **M1 [Rayan]:** app structure, shared theme conventions, and function contract.
+- **M2 [Remas]:** research and predictor display requirements.
+- **M3 [Basouny], M4 [Jomana], and M6 [Haneen]:** statistics and service result tables.
+- **M7 [Abdelrahman]:** selected dataset state and shared regression/traffic modules.
+- **M10 [Omar Tarek]:** interface and integration test findings.
+
 ### Provides to
- 
-- **M2 [Remas], M7 [Abdelrahman]:** `charts.js`.
-- **M2 [Remas]:** displayed results used to interpret findings.
+
+- **M1 [Rayan]:** shared theme requirements and interface integration status.
+- **M2 [Remas]:** shared chart helpers and predictor visualization.
+- **M7 [Abdelrahman]:** chart helpers and co-developed interface modules.
+- **M10 [Omar Tarek]:** statistical display flows for interface tests.
+
 ### Timeline
- 
+
 | Phase | Task |
 |---|---|
-| 1. Research design & contracts | Review the contract; list the chart types needed by M2 and M7 |
-| 2. Foundations | `charts.js` v1 so M2 and M7 can start |
-| 3. Core build | Regression, diagnostics and model comparison pages |
-| 4. Integration | Traffic levels and reports pages; real data end to end |
-| 5. Testing & validation | Fix display and error-state bugs with M10 |
-| 6. Final report & presentation | Final figures for the paper and presentation |
- 
----
+| 1. Research design & contracts | Agree chart types and display tables with M2 and M7 |
+| 2. Foundations | Establish shared theme and chart-helper interfaces |
+| 3. Core build | Implement regression, diagnostics, and model-comparison modules |
+| 4. Integration | Connect traffic-level, predictor, and report modules |
+| 5. Testing & validation | Resolve display and error-state findings |
+| 6. Final report & presentation | Deliver final figures and presentation views |

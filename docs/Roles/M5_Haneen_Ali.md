@@ -1,48 +1,54 @@
+# 3. R Services — Data, Persistence & Reports
 
-# 3. Backend Engineering — Python & Flask
- 
-**Members:** M5 [Haneen Ali] + M6 [Haneen]
- 
-**Primary ownership:** Backend services, database, and communication between Flask and R. M5 provides the data, M6 runs the analysis, and each depends on the other.
- 
-## Member 5 — Data, Storage & Reports
- 
+**Member:** M5 [Haneen Ali]
+
+**Primary ownership:** Dataset persistence, simulation and dataset services, and report generation.
+
 ### Responsibilities
- 
-- Database models and CRUD for datasets, analysis runs, model results and reports.
-- Simulation service: call the simulator in `simulation/`, store the output as immutable raw data with its seed and version.
-- Dataset service: upload, column validation, previews, processed copies.
-- Report service: assemble reports from stored results and figures, with exports.
-- Support M1 with the business logic behind the routes.
+
+- Provide database initialization and data access using the agreed R database interface.
+- Run the R simulator through the simulation service and store immutable raw datasets with seed and version metadata.
+- Import, preview, validate, and prepare datasets for analysis.
+- Render reports from analysis results and figures.
+- Coordinate stored result shapes with M6 and the interface owners.
+
 ### Assigned files
- 
+
 ```text
-backend/
-├── database.py
-└── services/
-    ├── simulation_service.py
-    ├── dataset_service.py
-    └── report_service.py
+SECSTAT/
+├── R/
+│   └── services/
+│       ├── database.R
+│       ├── simulation_service.R
+│       ├── dataset_service.R
+│       └── report_service.R
+└── reports/
+    ├── report_template.Rmd
+    └── generated/
 ```
- 
+
 ### Depends on
- 
-- **M9 [Tamim ]:** the interface for calling the generator.
-- **M6 [Haneen]:** results to store.
-- **M1 [Rayan ]:** route requirements, `validators.py` and `helpers.py`.
+
+- **M1 [Rayan]:** data provenance conventions, shared helpers, and service contracts.
+- **M6 [Haneen]:** analysis and prediction result shapes to persist.
+- **M9 [Tamim]:** simulator inputs, dataset format, and version metadata.
+- **M10 [Omar Tarek]:** test findings for persistence and reproducibility.
+
 ### Provides to
- 
-- **M6 [Haneen]:** stored datasets to send to R.
-- **M1 [Rayan ]:** services for the simulation, dataset and report routes.
-- **M7 [Abdelrahman], M8 [Nabila]:** datasets and reports shown in the interface.
+
+- **M1 [Rayan]:** dataset metadata for documentation and service integration details.
+- **M2 [Remas], M7 [Abdelrahman], and M8 [Nabila]:** dataset and report service results for their modules.
+- **M6 [Haneen]:** stored datasets and dataset metadata for analysis.
+- **M9 [Tamim]:** generator integration feedback.
+- **M10 [Omar Tarek]:** dataset fixtures and persistence behavior for tests.
+
 ### Timeline
- 
+
 | Phase | Task |
 |---|---|
-| 1. Research design & contracts | Agree the database schema and generator interface with M1 and M9 |
-| 2. Foundations | `database.py` and dataset CRUD |
-| 3. Core build | Simulation and dataset services; store analysis results from M6 |
-| 4. Integration | Report service on real results; connect to M1's routes |
-| 5. Testing & validation | Fix data-handling bugs; check raw data is never overwritten |
-| 6. Final report & presentation | Final report exports for the paper |
- 
+| 1. Research design & contracts | Agree data schema and generator handoff with M1 and M9 |
+| 2. Foundations | Establish database and dataset operations |
+| 3. Core build | Implement simulation, dataset, and result persistence |
+| 4. Integration | Render reports from real analysis results |
+| 5. Testing & validation | Verify raw data is preserved and metadata is complete |
+| 6. Final report & presentation | Deliver report template and export flow |

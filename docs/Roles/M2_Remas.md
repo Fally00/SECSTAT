@@ -1,56 +1,57 @@
+# 1. Research & Impact Predictor
 
-## M2 [Remas] — Research Co-Lead & Impact Predictor
- 
-**Primary ownership:** Research content and the main interface of the system, the Impact Predictor.
- 
+**Member:** M2 [Remas] — Research Co-Lead
+
+**Primary ownership:** Research content and the Impact Predictor module, shared with M8.
+
 ### Responsibilities
- 
-- Define the research problem and research questions.
-- Formulate the statistical hypotheses (H1–H4).
-- Define every variable: unit, realistic range, expected direction and expected nonlinearity. M9 builds the simulator from these definitions.
-- Write the methodology: model equations and model selection criteria.
-- Coordinate statistical requirements with the R team.
-- Keep `RESULTS_LOG.md` up to date from M3 and M4 outputs and interpret the results for the paper.
-- Build the Impact Predictor page: input form, predicted response time with interval, load level, and the packet rate versus response time chart.
+
+- Maintain the research question, hypotheses, variable definitions, and methodology.
+- Define units, plausible ranges, expected directions, and nonlinear relationships for M9 and the statistics owners.
+- Interpret model and validation results in the results log without changing the research question.
+- Design the Impact Predictor inputs, predicted response time and interval, load-level display, and packet-rate chart.
+- Coordinate the predictor module with M8's shared implementation.
+
 ### Assigned files
- 
+
 ```text
-research/
-├── RESEARCH_PROPOSAL.md
-├── HYPOTHESES.md
-├── VARIABLE_DICTIONARY.md
-├── METHODOLOGY.md
-└── RESULTS_LOG.md
- 
-frontend/
-├── pages/
-│   └── predictor.html
-└── js/
-    └── predictor.js
+SECSTAT/
+├── research/
+│   ├── RESEARCH_PROPOSAL.md
+│   ├── HYPOTHESES.md
+│   ├── VARIABLE_DICTIONARY.md
+│   ├── METHODOLOGY.md
+│   └── RESULTS_LOG.md
+└── R/
+    └── interface/
+        └── mod_predictor.R              (shared with M8 [Nabila])
 ```
- 
-Member 2 owns the research content. Member 1 integrates it into the project-level documentation.
- 
+
 ### Depends on
- 
-- **M9 [Tamim]:** the dataset and ground truth, to judge whether the results make sense.
-- **M3 [Basouny] , M4 [Jomana]:** the prediction output and the final model choice.
-- **M1 [Rayan], M6 [Haneen]:** the prediction endpoint.
-- **M8 [Nabila]:** `charts.js` for the Plotly chart.
+
+- **M1 [Rayan]:** project constraints and the app integration point.
+- **M3 [Basouny]:** fitted-model predictions and prediction intervals.
+- **M4 [Jomana]:** final model recommendation and validation findings.
+- **M6 [Haneen]:** prediction-service inputs and outputs.
+- **M8 [Nabila]:** shared theme and chart helpers for the predictor.
+- **M9 [Tamim]:** generated dataset and simulation ground truth.
+- **M10 [Omar Tarek]:** test findings on research-critical results.
+
 ### Provides to
- 
-- **M9 [Tamim]:** variable definitions and relationships.
-- **M3 [Basouny] , M4 [Jomana]:** hypotheses, equations, selection criteria.
-- **M1 [Rayan]:** research content for documentation and the paper.
+
+- **M1 [Rayan]:** stable research definitions for project documents.
+- **M3 [Basouny] and M4 [Jomana]:** hypotheses, model equations, and selection criteria.
+- **M7 [Abdelrahman] and M8 [Nabila]:** interface requirements and interpretation context.
+- **M9 [Tamim]:** variable definitions and expected relationships.
+- **M10 [Omar Tarek]:** hypothesis-aligned expected behaviors for tests.
+
 ### Timeline
- 
+
 | Phase | Task |
 |---|---|
-| 1. Research design & contracts | Research question, hypotheses, variable dictionary, methodology; hand definitions to M9 and equations to M3/M4 |
-| 2. Foundations | Predictor page layout and form using M1's design system |
-| 3. Core build | Connect the predictor to the prediction endpoint; add load level display |
-| 4. Integration | Add the packet rate versus response time chart; test with the final model |
-| 5. Testing & validation | Check results against hypotheses; update `RESULTS_LOG.md` |
-| 6. Final report & presentation | Write the research sections of the paper; prepare the demo |
- 
----
+| 1. Research design & contracts | Confirm question, hypotheses, variables, and methodology |
+| 2. Foundations | Define predictor inputs and display requirements with M8 |
+| 3. Core build | Implement the research documents and predictor module |
+| 4. Integration | Connect model choice, predictions, intervals, and chart |
+| 5. Testing & validation | Compare results with hypotheses and update the results log |
+| 6. Final report & presentation | Prepare research interpretation and demonstration |
