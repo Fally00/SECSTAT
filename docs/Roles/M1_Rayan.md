@@ -1,102 +1,82 @@
-# 1. Leadership, Research & Core Application
- 
-**Members:** M1 (Project Leader) + M2 (Research Co-Lead)
- 
-## M1 [Rayan] — Project Leader
- 
-**Primary ownership:** Project documentation, API contract, Flask foundation, routes, shared frontend foundation, plus a few small files taken from the R, backend and data teams to balance the workload.
- 
+# 1. Project Leadership & Core Application
+
+**Member:** M1 [Rayan] — Project Leader
+
+**Primary ownership:** Project documentation, architecture, shared app foundation, and the shared statistics and core files shown below.
+
 ### Responsibilities
- 
-- Lead and coordinate all five teams.
-- Create and maintain all project-level Markdown documentation.
-- Define the overall architecture.
-- Build the Flask application foundation and organize the API routes.
-- Write and maintain `docs/API_CONTRACT.md` with the R, backend and frontend teams, including mock responses so teams can build in parallel.
-- Build the shared frontend layout and design system.
-- Review pull requests and manage integration.
-- Track milestones and make sure the project meets the course requirements.
-- Write the supporting R scripts: descriptive statistics, correlation, one-way ANOVA and Tukey HSD, returning JSON as defined in the API contract.
-- Write `validators.py` and `helpers.py` (required columns, types, plausible ranges, agreed with M2 and M9) for M5 and M6 to use.
-- Maintain the data dictionary and data provenance from the information M9 provides.
+
+- Coordinate the five teams, review integration, and track milestones.
+- Maintain project-level documentation and keep the architecture aligned with all role files.
+- Maintain the function contract with statistics, services, and interface owners.
+- Integrate the Shiny application with M7 and maintain shared configuration, helpers, theme, and project-level documentation.
+- Implement descriptive statistics, correlation, one-way ANOVA, and Tukey HSD with their shared owners.
+- Maintain the data dictionary and provenance from M9's simulator metadata.
+
 ### Assigned files
- 
+
 ```text
-README.md
-ROLES.md
-CONTRIBUTING.md
- 
-docs/
-├── ARCHITECTURE.md
-├── API_CONTRACT.md
-├── PROJECT_PLAN.md
-├── TESTING.md
-└── REPRODUCIBILITY.md
- 
-backend/
-├── app.py
-├── config.py
-└── routes/
-    ├── simulation.py
-    ├── datasets.py
-    ├── analysis.py
-    ├── prediction.py
-    └── reports.py
- 
-frontend/
-├── index.html
-├── css/
-│   ├── style.css
-│   ├── layout.css
-│   └── pages.css
-├── js/
-│   ├── app.js
-│   └── api.js
-└── assets/
+SECSTAT/
+├── .gitattributes
+├── README.md
+├── ROLES.md
+├── CONTRIBUTING.md
+├── DESCRIPTION                         (planned; generate after code exists)
+├── renv.lock                           (planned; generate after code exists)
+├── app.R                               (shared with M7 [Abdelrahman])
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── FUNCTION_CONTRACT.md
+│   ├── PROJECT_PLAN.md
+│   ├── TESTING.md                      (shared with M10 [Omar Tarek])
+│   ├── REPRODUCIBILITY.md              (shared with M10 [Omar Tarek])
+│   └── Roles/
+├── data/
+│   ├── DATA_DICTIONARY.md
+│   └── DATA_PROVENANCE.md
+├── reports/
+│   └── README.md
+├── R/
+│   ├── core/
+│   │   ├── config.R
+│   │   ├── helpers.R
+│   │   └── theme.R                     (shared with M8 [Nabila])
+│   └── statistics/
+│       ├── descriptive.R               (shared with M4 [Jomana])
+│       ├── correlation.R               (shared with M4 [Jomana])
+│       ├── anova_one_way.R             (shared with M3 [Basouny])
+│       └── posthoc.R                   (shared with M3 [Basouny])
+└── www/
     ├── images/
+    │   └── SECSTAT Logo.jpg
     └── icons/
 ```
- 
-**Supporting files taken from other teams**
- 
-```text
-r_engine/
-├── descriptive.R          (from M3 [Basouny])
-├── correlation.R          (from M3 [Basouny])
-├── anova_one_way.R        (from M4 [Jomana] )
-└── posthoc.R              (from M4 [Jomana] )
- 
-backend/utils/
-├── validators.py          (from M6 [Haneen] )
-└── helpers.py             (from M6 [Haneen] )
- 
-data/
-├── DATA_DICTIONARY.md     (from M9 [Tamim]  )
-└── DATA_PROVENANCE.md     (from M9 [Tamim]  )
-```
- 
----
+
 ### Depends on
- 
-- **M2 [Remas]:** research scope and hypotheses for the plan and architecture; plausible variable ranges for the validators.
-- **M3 [Basouny] , M4 [Jomana]:** the JSON structure each R script returns (M1's own R scripts follow the same structure).
-- **M5 [Haneen Ali], M6 [Haneen]:** the services the routes call.
-- **M9 [Tamim]:** seed, version and parameters of each dataset for the data dictionary and provenance.
+
+- **M2 [Remas]:** approved research definitions and hypotheses for project documentation.
+- **M3 [Basouny] and M4 [Jomana]:** statistical function inputs and result tables for the function contract.
+- **M5 [Haneen Ali] and M6 [Haneen]:** service requirements and result shapes for application integration.
+- **M7 [Abdelrahman] and M8 [Nabila]:** module integration and shared theme requirements.
+- **M9 [Tamim]:** seed, version, and parameters for data dictionary and provenance.
+- **M10 [Omar Tarek]:** test findings and reproducibility feedback.
+
 ### Provides to
- 
-- **Everyone:** API contract, mock responses, architecture decisions.
-- **M2 [Remas], M7 [Abdelrahman], M8 [Nabila]:** `api.js`, shared layout and design system.
-- **M5 [Haneen Ali], M6 [Haneen]:** `validators.py` and `helpers.py`.
-- **M6 [Haneen], M8 [Nabila]:** the descriptive, correlation, ANOVA and Tukey R scripts and their results.
+
+- **M2 [Remas]:** project specifications and the predictor integration point.
+- **M3 [Basouny] and M4 [Jomana]:** function contract and shared-statistics conventions.
+- **M5 [Haneen Ali] and M6 [Haneen]:** shared configuration, helpers, documentation, and function contracts.
+- **M7 [Abdelrahman] and M8 [Nabila]:** app integration decisions and shared theme.
+- **M9 [Tamim]:** data dictionary and provenance format.
+- **M10 [Omar Tarek]:** architecture, testing, and reproducibility documentation.
+
 ### Timeline
- 
+
 | Phase | Task |
 |---|---|
-| 1. Research design & contracts | Draft `API_CONTRACT.md` with mock responses; project plan and architecture |
-| 2. Foundations | Flask app, config, route skeleton; shared layout and design system; `validators.py` and `helpers.py` v1; `descriptive.R` and `correlation.R` |
-| 3. Core build | Implement routes against M5/M6 services; maintain `api.js`; `anova_one_way.R` and `posthoc.R`; draft the data dictionary from M9's first dataset |
-| 4. Integration | Wire all routes to the real services; resolve contract mismatches; data provenance for the final datasets |
-| 5. Testing & validation | Review PRs and bug fixes; final contract check |
-| 6. Final report & presentation | Finalize documentation; coordinate paper and presentation |
- 
----
+| 1. Research design & contracts | Align architecture and function contracts with the research and technical owners |
+| 2. Foundations | Establish the app integration, configuration, helper, theme, and shared-statistics interfaces |
+| 3. Core build | Integrate modules and services; maintain dataset documentation |
+| 4. Integration | Resolve cross-team mismatches and refresh provenance |
+| 5. Testing & validation | Review test findings and coordinate fixes |
+| 6. Final report & presentation | Finalize project documentation and coordinate delivery |

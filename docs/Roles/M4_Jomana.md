@@ -1,45 +1,54 @@
-# 2. Statistical Engineering — R
- 
-**Members:** M3 [Basouny] + M4 [Jomana]
- 
-**Primary ownership:** All statistical computation and validation in R. M3 builds the models; M4 tests and compares them. Each needs the other's output.
+# 2. Statistical Engineering — Diagnostics & Validation
 
-## M4 [Jomana] — Diagnostics, Model Comparison & Validation
- 
+**Member:** M4 [Jomana]
+
+**Primary ownership:** Regression diagnostics, model comparison, and validation; shared descriptive and correlation statistics.
+
 ### Responsibilities
- 
-- Regression diagnostics: residuals, normality, heteroscedasticity, multicollinearity (VIF), influential points.
-- Model comparison: adjusted R², AIC/BIC, nested F-test, cross-validated RMSE. Recommend the final model.
-- Validation: compare R output with reference datasets, and check that the fitted coefficients recover the simulation's true equation within a stated tolerance.
+
+- Diagnose residual behavior, normality, heteroscedasticity, multicollinearity, and influential observations.
+- Compare candidate models using adjusted R², AIC/BIC, nested tests, and cross-validated RMSE.
+- Recommend the final predictor and validate fitted results against references and simulation ground truth.
+- Co-develop the shared descriptive and correlation functions with M1.
+
 ### Assigned files
- 
+
 ```text
-r_engine/
-├── diagnostics.R
-├── model_comparison.R
-└── validation_tests.R
+SECSTAT/
+└── R/
+    └── statistics/
+        ├── diagnostics.R
+        ├── model_comparison.R
+        ├── validation_tests.R
+        ├── descriptive.R                   (shared with M1 [Rayan])
+        └── correlation.R                   (shared with M1 [Rayan])
 ```
- 
+
 ### Depends on
- 
-- **M3 [Basouny]:** fitted models.
-- **M9 [Tamim  ]:** the ground-truth equation and datasets.
-- **M2 [Remas  ]:** model selection criteria.
-- **M1 [Rayan  ]:** JSON structure.
+
+- **M1 [Rayan]:** function contract and shared-statistics conventions.
+- **M2 [Remas]:** hypotheses and model-selection criteria.
+- **M3 [Basouny]:** fitted models and candidate predictions.
+- **M9 [Tamim]:** datasets and the documented generating equation.
+- **M10 [Omar Tarek]:** reference-test results and test failures.
+
 ### Provides to
- 
-- **M2 [Remas], M3 [Basouny], M6 [Haneen ali]:** the final model recommendation.
-- **M9 [Tamim]:** feedback if the simulated data cannot be modeled well (for example, too little nonlinearity or extreme collinearity).
-- **M10 [Omar Tarek]:** validation results and reference values for tests.
+
+- **M1 [Rayan]:** shared statistics results and final model recommendation.
+- **M2 [Remas]:** final model choice and validation findings for interpretation.
+- **M3 [Basouny]:** diagnostics and model-selection feedback.
+- **M6 [Haneen]:** model recommendation and expected result shapes.
+- **M8 [Nabila]:** diagnostic and model-comparison tables for the interface.
+- **M9 [Tamim]:** feedback when simulated data cannot support the planned models.
+- **M10 [Omar Tarek]:** validation results and reference values.
+
 ### Timeline
- 
+
 | Phase | Task |
 |---|---|
-| 1. Research design & contracts | Agree selection criteria with M2 and JSON output with M1 |
-| 2. Foundations | Diagnostics scripts on a first simulated dataset from M9 |
-| 3. Core build | Model comparison and validation tests |
-| 4. Integration | Recommend the final model; share with M2, M3 and M6 |
-| 5. Testing & validation | Run the full validation against ground truth; report to M9 and M10 |
-| 6. Final report & presentation | Provide diagnostics and comparison results for the paper |
- 
----
+| 1. Research design & contracts | Agree criteria and result tables with M1 and M2 |
+| 2. Foundations | Diagnose the first reproducible dataset |
+| 3. Core build | Implement diagnostics, comparisons, and validation |
+| 4. Integration | Recommend the final model to M2, M3, and M6 |
+| 5. Testing & validation | Check against simulation ground truth and reference values |
+| 6. Final report & presentation | Deliver diagnostic and comparison results |
