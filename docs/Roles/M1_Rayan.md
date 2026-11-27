@@ -16,9 +16,9 @@
 - Build the shared frontend layout and design system.
 - Review pull requests and manage integration.
 - Track milestones and make sure the project meets the course requirements.
-- Write the supporting R scripts: descriptive statistics, correlation, one-way ANOVA and Tukey HSD, returning JSON as defined in the API contract.
-- Write `validators.py` and `helpers.py` (required columns, types, plausible ranges, agreed with M2 and M9) for M5 and M6 to use.
-- Maintain the data dictionary and data provenance from the information M9 provides.
+- Write the supporting R scripts: descriptive statistics, correlation, one-way ANOVA, Tukey HSD, and regression diagnostics (`diagnostics.R`: residuals, normality, heteroscedasticity, multicollinearity/VIF, influential points), returning JSON as defined in the API contract.
+- Write `validators.py` and `helpers.py` (required columns, types, plausible ranges, agreed with M2 and M8) for M4 and M5 to use.
+- Maintain the data dictionary and data provenance from the information M8 provides.
 ### Assigned files
  
 ```text
@@ -63,38 +63,40 @@ frontend/
 r_engine/
 ├── descriptive.R          (from M3 [Basouny])
 ├── correlation.R          (from M3 [Basouny])
-├── anova_one_way.R        (from M4 [Jomana] )
-└── posthoc.R              (from M4 [Jomana] )
+├── anova_one_way.R
+├── posthoc.R
+└── diagnostics.R          (residuals, normality, heteroscedasticity, VIF, influential points)
  
 backend/utils/
-├── validators.py          (from M6 [Haneen] )
-└── helpers.py             (from M6 [Haneen] )
+├── validators.py          (from M5 [Haneen] )
+└── helpers.py             (from M5 [Haneen] )
  
 data/
-├── DATA_DICTIONARY.md     (from M9 [Tamim]  )
-└── DATA_PROVENANCE.md     (from M9 [Tamim]  )
+├── DATA_DICTIONARY.md     (from M8 [Tamim]  )
+└── DATA_PROVENANCE.md     (from M8 [Tamim]  )
 ```
  
 ---
 ### Depends on
  
 - **M2 [Remas]:** research scope and hypotheses for the plan and architecture; plausible variable ranges for the validators.
-- **M3 [Basouny] , M4 [Jomana]:** the JSON structure each R script returns (M1's own R scripts follow the same structure).
-- **M5 [Haneen Ali], M6 [Haneen]:** the services the routes call.
-- **M9 [Tamim]:** seed, version and parameters of each dataset for the data dictionary and provenance.
+- **M3 [Basouny]:** fitted models (for `diagnostics.R`) and the JSON structure each R script returns (M1's own R scripts follow the same structure).
+- **M4 [Jomana], M5 [Haneen]:** the services the routes call.
+- **M8 [Tamim]:** seed, version and parameters of each dataset for the data dictionary and provenance.
 ### Provides to
  
 - **Everyone:** API contract, mock responses, architecture decisions.
-- **M2 [Remas], M7 [Abdelrahman], M8 [Nabila]:** `api.js`, shared layout and design system.
-- **M5 [Haneen Ali], M6 [Haneen]:** `validators.py` and `helpers.py`.
-- **M6 [Haneen], M8 [Nabila]:** the descriptive, correlation, ANOVA and Tukey R scripts and their results.
+- **M2 [Remas], M6 [Abdelrahman], M7 [Nabila]:** `api.js`, shared layout and design system.
+- **M4 [Jomana], M5 [Haneen]:** `validators.py` and `helpers.py`.
+- **M5 [Haneen], M7 [Nabila]:** the descriptive, correlation, ANOVA, Tukey and diagnostics R scripts and their results.
+- **M3 [Basouny], M9 [Omar Tarek]:** regression diagnostics results (`diagnostics.R`).
 ### Timeline
  
 | Phase | Task |
 |---|---|
 | 1. Research design & contracts | Draft `API_CONTRACT.md` with mock responses; project plan and architecture |
-| 2. Foundations | Flask app, config, route skeleton; shared layout and design system; `validators.py` and `helpers.py` v1; `descriptive.R` and `correlation.R` |
-| 3. Core build | Implement routes against M5/M6 services; maintain `api.js`; `anova_one_way.R` and `posthoc.R`; draft the data dictionary from M9's first dataset |
+| 2. Foundations | Flask app, config, route skeleton; shared layout and design system; `validators.py` and `helpers.py` v1; `descriptive.R`, `correlation.R`, and `diagnostics.R` on first simulated dataset |
+| 3. Core build | Implement routes against M4/M5 services; maintain `api.js`; `anova_one_way.R` and `posthoc.R`; draft the data dictionary from M8's first dataset |
 | 4. Integration | Wire all routes to the real services; resolve contract mismatches; data provenance for the final datasets |
 | 5. Testing & validation | Review PRs and bug fixes; final contract check |
 | 6. Final report & presentation | Finalize documentation; coordinate paper and presentation |
