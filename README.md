@@ -13,7 +13,7 @@
 
 During a DDoS attack, traffic to a server rises far beyond normal levels. Packet rate, bandwidth use, open connections and CPU load all climb together, and the server's response time degrades, slowly at first and then very fast once the server nears its limits.
 
-SECSTAT estimates **how much an abnormal increase in network traffic will hurt server response time**, using regression models built and validated in R, and shows the answer in a simple web interface built with R Shiny.
+SECSTAT estimates **how much an abnormal increase in network traffic will hurt server response time**, using regression models built and validated in R, served through a Python/Flask backend, and presented in a web interface.
 
 ## 2. The Problem
 
@@ -23,7 +23,7 @@ SECSTAT estimates **how much an abnormal increase in network traffic will hurt s
 
 ## 3. Our Solution
 
-SECSTAT is a web application, written entirely in R, that:
+SECSTAT is a web application with a Python/Flask backend, an R statistical engine, and an HTML/CSS/JavaScript frontend that:
 
 1. **Simulates** server behavior under normal and DDoS-like traffic, producing a documented dataset.
 2. **Models** response time with multiple linear regression, then polynomial regression to capture nonlinear effects.
@@ -38,7 +38,7 @@ The statistical toolkit (descriptive statistics, correlation, ANOVA, diagnostics
 
 How do abnormal increases in network traffic affect server response time, and can multiple and polynomial regression models explain and predict this effect?
 
-**Hypotheses (formal versions in [research/HYPOTHESES.md](research/HYPOTHESES.md)):**
+**Hypotheses (documented in [docs/research/](docs/research/)):**
 
 - **H1:** Packet rate has a significant positive effect on response time when the other variables are held constant.
 - **H2:** The regression model explains a significant part of the variation in response time (overall F-test).
@@ -73,83 +73,89 @@ Higher degrees or squared terms for other variables are added only if model comp
 
 ## 6. Data
 
-The dataset is **synthetic**, produced by a seeded simulator (`simulation/generate_dataset.R`).
+The dataset is **synthetic**, produced by a seeded simulator (`simulation/generate_dataset.py`) with scenarios defined in `simulation/scenarios.json`.
 
 - Scenarios cover normal, elevated and DDoS-like traffic.
 - Predictors are correlated with each other and respect physical limits (CPU and bandwidth cannot exceed 100%).
 - Response time follows a nonlinear relationship with noise, so the polynomial model has something real to find.
 - The true generating equation is recorded in `simulation/SIMULATION_MODEL.md`, so we can check that our regression models recover it.
+- Raw datasets are stored in `data/raw/` (never overwritten) and processed copies in `data/processed/`.
 - The same seed always produces the same dataset.
 
 **Limitation:** because the data is simulated, our findings describe the simulated server model, not measurements from a real server. The final report states this clearly. No real attack traffic is generated anywhere in the project.
 
 ## 7. Statistical Methods
 
-| Method | Role in the project |
-|---|---|
-| Descriptive Statistics | Understand each variable across normal and attack traffic |
-| Correlation | Relationships between traffic metrics and response time |
-| Simple Regression | Packet rate versus response time (shown on the predictor chart) |
-| Multiple Linear Regression | Main explanatory and predictive model |
-| Polynomial Regression | Capture nonlinear and saturation effects |
-| Hypothesis Testing | Coefficient t-tests, overall F-test, nested F-test |
-| Regression Diagnostics | Residuals, normality, heteroscedasticity, multicollinearity (VIF), influential points |
-| Model Comparison | Choose the final predictor |
-| One-Way ANOVA + Tukey HSD | Supporting comparison of response time across traffic levels |
-| Validation Tests | Check results against reference data and the simulation ground truth |
+| Method | R Script (`r_engine/`) | Role in the project |
+|---|---|---|
+| Descriptive Statistics | `descriptive.R` | Understand each variable across normal and attack traffic |
+| Correlation | `correlation.R` | Relationships between traffic metrics and response time |
+| Simple Regression | `simple_regression.R` | Packet rate versus response time (shown on the predictor chart) |
+| Multiple Linear Regression | `multiple_regression.R` | Main explanatory and predictive model |
+| Polynomial Regression | `polynomial_regression.R` | Capture nonlinear and saturation effects |
+| Prediction | `prediction.R` | Point predictions and prediction intervals for new inputs |
+| Regression Plots | `regression_plots.R` | Plot-ready data for fitted curves and diagnostics |
+| Regression Diagnostics | `diagnostics.R` | Residuals, normality, heteroscedasticity, multicollinearity (VIF), influential points |
+| Model Comparison | `model_comparison.R` | Choose the final predictor (adjusted R², AIC/BIC, nested F-test, CV RMSE) |
+| One-Way ANOVA & Tukey HSD | `anova_one_way.R`, `posthoc.R` | Supporting comparison of response time across traffic levels |
+| Validation Tests | `validation_tests.R` | Check results against reference data and the simulation ground truth |
 
 **R performs all statistical calculations.**
 
-## 8. Web Application Modules
+## 8. Web Application Modules (`frontend/`)
 
-1. **Dashboard:** Overview of datasets, models and latest results.
-2. **Impact Predictor (main):** Enter traffic conditions, get the predicted response time.
-3. **Simulation Lab:** Configure and generate synthetic datasets.
-4. **Dataset Explorer:** Upload, inspect and prepare datasets.
-5. **Regression Lab:** Fit and inspect linear and polynomial models.
-6. **Traffic Level Comparison:** ANOVA and Tukey HSD across traffic levels.
-7. **Diagnostics Lab:** Evaluate regression assumptions.
-8. **Model Comparison:** Compare the fitted models and select the final one.
-9. **Research Reports:** Generate downloadable statistical reports.
+1. **Dashboard (`index.html`):** Overview of datasets, models and latest results.
+2. **Impact Predictor (`pages/predictor.html`):** Enter traffic conditions, get the predicted response time.
+3. **Simulation Lab (`pages/simulation.html`):** Configure and generate synthetic datasets.
+4. **Dataset Explorer (`pages/datasets.html`):** Upload, inspect and prepare datasets.
+5. **Regression Lab (`pages/regression.html`):** Fit and inspect linear and polynomial models.
+6. **Traffic Level Comparison (`pages/traffic_levels.html`):** ANOVA and Tukey HSD across traffic levels.
+7. **Diagnostics Lab (`pages/diagnostics.html`):** Evaluate regression assumptions.
+8. **Model Comparison (`pages/model_comparison.html`):** Compare the fitted models and select the final one.
+9. **Research Reports (`pages/reports.html`):** Generate downloadable statistical reports.
 
 ### Expected interface (Impact Predictor)
 
-The user enters Packet_Rate, Bandwidth, Active_Connections and CPU_Usage. The page shows:
+The user enters `Packet_Rate`, `Bandwidth`, `Active_Connections` and `CPU_Usage`. The page shows:
 
 - **Predicted response time** in ms, with a prediction interval.
-- **Expected server load level** (Low / Moderate / High / Critical), based on thresholds defined in `R/core/config.R`.
+- **Expected server load level** (Low / Moderate / High / Critical), based on thresholds defined in `backend/config.py`.
 - **Chart of packet rate versus response time** with the data points, the linear and polynomial fits, and the user's input marked.
 
-## 9. Technology Stack
+## 9. Technology Stack & Project Structure
 
-| Component | Technology |
-|---|---|
-| Language | R |
-| Web Application | Shiny + bslib |
-| Visualizations | plotly (R package) |
-| Statistics | R |
-| Data Simulation | R |
-| Database | SQLite (`DBI` + `RSQLite`), PostgreSQL optional |
-| Reports | R Markdown |
-| Testing | testthat |
-| Reproducibility | renv + fixed seeds |
+| Component | Technology | Location |
+|---|---|---|
+| Backend API | Python + Flask | `backend/` (`app.py`, `routes/`, `services/`, `utils/`, `r_engine/r_runner.py`) |
+| Statistical Engine | R (`Rscript` subprocess) | `r_engine/` |
+| Frontend | HTML, CSS, JavaScript | `frontend/` (`index.html`, `pages/`, `js/`, `css/`, `assets/`) |
+| Data Simulation | Python | `simulation/` (`generate_dataset.py`, `scenarios.json`, `SIMULATION_MODEL.md`) |
+| Data Storage | `data/` + Database (`backend/database.py`) | `data/raw/`, `data/processed/` |
+| Reports | Generated reports & figures | `reports/generated/`, `reports/figures/` |
+| Testing | Python (`pytest`) | `tests/` (`test_analysis.py`, `test_prediction.py`, `test_reproducibility.py`) |
+| Documentation | Markdown | `docs/` (`API_CONTRACT.md`, `ARCHITECTURE.md`, `Roles/`, `research/`) |
 
 **Architecture:**
 
-Simulator → Dataset → R Services → R Statistics → Database / Results → Shiny Interface
+```text
+Simulator (simulation/) → Dataset (data/) → Flask Backend (backend/) ↔ R Engine (r_engine/) → Frontend (frontend/)
+```
 
-Everything runs in R. The interface calls R functions directly, with no separate backend or REST API. Function inputs and outputs are defined in [FUNCTION_CONTRACT.md](docs/FUNCTION_CONTRACT.md).
+API endpoints and JSON payload structures are defined in [docs/API_CONTRACT.md](docs/API_CONTRACT.md).
 
 ## 10. Getting Started
 
-From the project root, in R:
+From the project root:
 
-```r
-install.packages("renv")   # first time only
-renv::restore()            # install the locked packages
-shiny::runApp()            # start the application
-testthat::test_dir("tests/testthat")   # run the tests
+```bash
+# Run the Flask backend
+python backend/app.py
+
+# Run the automated test suite
+pytest tests/
 ```
+
+Ensure both **Python** and **R** (`Rscript`) are installed and available on your `PATH`.
 
 ## 11. Project Vision
 
