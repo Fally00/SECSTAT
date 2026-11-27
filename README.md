@@ -3,7 +3,7 @@
 
 **Project Type:** Academic Research & Web Application (Modern Regression course)
 
-**Team:** 10 members (5 teams). Check each member's role in [Roles](docs/Roles/).
+**Team:** 9 members (5 teams). Check each member's role in [Roles](Roles.md).
 
 #### Read the [Instructions](docs/Roles/Instructions.md) before starting.
 #### For the project structure tree, check [Architecture](docs/ARCHITECTURE.md).

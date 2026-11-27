@@ -2,7 +2,7 @@
 ```
 SECSTAT/
 │
-├── app.R                                      — M1 [Rayan] & M7 [Abdelrahman]
+├── app.R                                      — M1 [Rayan] & M6 [Abdelrahman]
 ├── DESCRIPTION                                — M1 [Rayan]
 ├── renv.lock                                  — M1 [Rayan]
 ├── README.md                                  — M1 [Rayan]
@@ -13,8 +13,8 @@ SECSTAT/
 │   ├── ARCHITECTURE.md                        — M1 [Rayan]
 │   ├── FUNCTION_CONTRACT.md                   — M1 [Rayan]
 │   ├── PROJECT_PLAN.md                        — M1 [Rayan]
-│   ├── TESTING.md                             — M1 [Rayan] (with M10 [Omar Tarek])
-│   ├── REPRODUCIBILITY.md                     — M1 [Rayan] (with M10 [Omar Tarek])
+│   ├── TESTING.md                             — M1 [Rayan] (with M9 [Omar Tarek])
+│   ├── REPRODUCIBILITY.md                     — M1 [Rayan] (with M9 [Omar Tarek])
 │   └── Roles/                                 — M1 [Rayan]
 │
 ├── research/                                  — M2 [Remas] (research content)
@@ -24,21 +24,21 @@ SECSTAT/
 │   ├── METHODOLOGY.md                         — M2 [Remas]
 │   └── RESULTS_LOG.md                         — M2 [Remas]
 │
-├── simulation/                                — M9 [Tamim]
-│   ├── SIMULATION_MODEL.md                    — M9 [Tamim]
-│   ├── generate_dataset.R                     — M9 [Tamim]
-│   └── scenarios.json                         — M9 [Tamim]
+├── simulation/                                — M8 [Tamim]
+│   ├── SIMULATION_MODEL.md                    — M8 [Tamim]
+│   ├── generate_dataset.R                     — M8 [Tamim]
+│   └── scenarios.json                         — M8 [Tamim]
 │
 ├── data/
-│   ├── raw/                                   — M9 [Tamim]
-│   ├── processed/                             — M9 [Tamim]
-│   ├── DATA_DICTIONARY.md                     — M1 [Rayan] (from M9 [Tamim] input)
-│   └── DATA_PROVENANCE.md                     — M1 [Rayan] (from M9 [Tamim] input)
+│   ├── raw/                                   — M8 [Tamim]
+│   ├── processed/                             — M8 [Tamim]
+│   ├── DATA_DICTIONARY.md                     — M1 [Rayan] (from M8 [Tamim] input)
+│   └── DATA_PROVENANCE.md                     — M1 [Rayan] (from M8 [Tamim] input)
 │
 ├── R/
 │   ├── statistics/
-│   │   ├── descriptive.R                      — M1 [Rayan] & M4 [Jomana]
-│   │   ├── correlation.R                      — M1 [Rayan] & M4 [Jomana]
+│   │   ├── descriptive.R                      — M1 [Rayan]
+│   │   ├── correlation.R                      — M1 [Rayan]
 │   │   ├── simple_regression.R                — M3 [Basouny]
 │   │   ├── multiple_regression.R              — M3 [Basouny]
 │   │   ├── polynomial_regression.R            — M3 [Basouny]
@@ -46,48 +46,48 @@ SECSTAT/
 │   │   ├── regression_plots.R                 — M3 [Basouny]
 │   │   ├── anova_one_way.R                    — M1 [Rayan] & M3 [Basouny]
 │   │   ├── posthoc.R                          — M1 [Rayan] & M3 [Basouny]
-│   │   ├── diagnostics.R                      — M4 [Jomana]
-│   │   ├── model_comparison.R                 — M4 [Jomana]
-│   │   └── validation_tests.R                 — M4 [Jomana]
+│   │   ├── diagnostics.R                      — M1 [Rayan]
+│   │   ├── model_comparison.R                 — M3 [Basouny]
+│   │   └── validation_tests.R                 — M9 [Omar Tarek]
 │   │
 │   ├── services/
-│   │   ├── database.R                         — M5 [Haneen Ali]
-│   │   ├── simulation_service.R               — M5 [Haneen Ali]
-│   │   ├── dataset_service.R                  — M5 [Haneen Ali]
-│   │   ├── report_service.R                   — M5 [Haneen Ali]
-│   │   ├── analysis_service.R                 — M6 [Haneen]
-│   │   └── prediction_service.R               — M6 [Haneen]
+│   │   ├── database.R                         — M4 [Jomana]
+│   │   ├── simulation_service.R               — M4 [Jomana]
+│   │   ├── dataset_service.R                  — M4 [Jomana]
+│   │   ├── report_service.R                   — M4 [Jomana]
+│   │   ├── analysis_service.R                 — M5 [Haneen]
+│   │   └── prediction_service.R               — M5 [Haneen]
 │   │
 │   ├── core/
 │   │   ├── config.R                           — M1 [Rayan]
-│   │   ├── validators.R                       — M6 [Haneen]
+│   │   ├── validators.R                       — M5 [Haneen]
 │   │   ├── helpers.R                          — M1 [Rayan]
-│   │   └── theme.R                            — M1 [Rayan] & M8 [Nabila]
+│   │   └── theme.R                            — M1 [Rayan] & M7 [Nabila]
 │   │
 │   └── interface/
-│       ├── mod_predictor.R                    — M2 [Remas] & M8 [Nabila]
-│       ├── mod_dashboard.R                    — M7 [Abdelrahman]
-│       ├── mod_simulation.R                   — M7 [Abdelrahman]
-│       ├── mod_datasets.R                     — M7 [Abdelrahman]
-│       ├── mod_regression.R                   — M8 [Nabila] & M7 [Abdelrahman]
-│       ├── mod_traffic_levels.R               — M8 [Nabila] & M7 [Abdelrahman]
-│       ├── mod_diagnostics.R                  — M8 [Nabila]
-│       ├── mod_model_comparison.R             — M8 [Nabila]
-│       ├── mod_reports.R                      — M8 [Nabila]
-│       └── charts.R                           — M8 [Nabila]
+│       ├── mod_predictor.R                    — M2 [Remas] & M7 [Nabila]
+│       ├── mod_dashboard.R                    — M6 [Abdelrahman]
+│       ├── mod_simulation.R                   — M6 [Abdelrahman]
+│       ├── mod_datasets.R                     — M6 [Abdelrahman]
+│       ├── mod_regression.R                   — M7 [Nabila] & M6 [Abdelrahman]
+│       ├── mod_traffic_levels.R               — M7 [Nabila] & M6 [Abdelrahman]
+│       ├── mod_diagnostics.R                  — M7 [Nabila]
+│       ├── mod_model_comparison.R             — M7 [Nabila]
+│       ├── mod_reports.R                      — M7 [Nabila]
+│       └── charts.R                           — M7 [Nabila]
 │
 ├── www/
 │   ├── images/
 │   └── icons/
 │
 ├── reports/
-│   ├── README.md                              — unassigned (not specified in role docs)
-│   ├── report_template.Rmd                    — M5 [Haneen Ali]
-│   ├── generated/                             — M5 [Haneen Ali]
-│   └── figures/                               — M8 [Nabila]
+│   ├── README.md                              — unassigned 
+│   ├── report_template.Rmd                    — M4 [Jomana]
+│   ├── generated/                             — M4 [Jomana]
+│   └── figures/                               — M7 [Nabila]
 │
-└── tests/                                     — M10 [Omar Tarek]
+└── tests/                                     — M9 [Omar Tarek]
     └── testthat/
-        ├── test-reproducibility.R             — M10 [Omar Tarek]
-        ├── test-analysis.R                    — M10 [Omar Tarek]
-        └── test-prediction.R                  — M10 [Omar Tarek]
+        ├── test-reproducibility.R             — M9 [Omar Tarek]
+        ├── test-analysis.R                    — M9 [Omar Tarek]
+        └── test-prediction.R                  — M9 [Omar Tarek]
